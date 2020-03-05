@@ -20,7 +20,7 @@ x <- read_sheet(ss =  "14HmwN2cEVAJHupuehCuLdwG9BXtR3COrxDgaaylLhkA") %>%
 ```
 
 
-```{r}
+```{r, echo = FALSE}
 # I don't really like this plot. There are only 26 allowed values, from 0% to
 # 100% in increments of 4%. So, I should be able to see separate points. But I
 # could never get that to work, even using geom_bar() and other tricks. 
@@ -36,5 +36,11 @@ x %>%
         x = "Percentage of Red Beads Out of 25 Drawn",
         y = "Count") + 
   theme_fivethirtyeight()
+```
+
+```{r}
+
+fake_urn <- tibble(bean_ID = 1:10000,
+                     color = c(rep("Red", 2000), rep("White", 8000)))
 ```
 
