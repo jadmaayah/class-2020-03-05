@@ -70,6 +70,9 @@ virtual_class %>%
 ```{r}
 many_times <- tibble(trials = map(rep(51, 1000), class_simulation))
 
+many_times[[1]][[1]] %>%
+  ggplot(aes(perc_red)) +
+  geom_histogram(bins = 20)
 
 unnest_many_times <- unnest(many_times, cols = c(trials))
 
