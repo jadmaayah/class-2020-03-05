@@ -11,6 +11,7 @@ library(googlesheets4)
 library(janitor)
 library(tidyverse)
 library(ggthemes)
+library(infer)
 sheets_deauth()
 # There is nothing wrong with reading in, and cleaning up, your data in the
 # setup R code chunk. But, to be honest, I am just doing this here because I
@@ -42,5 +43,27 @@ x %>%
 
 fake_urn <- tibble(bean_ID = 1:10000,
                      color = c(rep("Red", 2000), rep("White", 8000)))
+
+class_simulation <- function(n) {
+  fake_urn %>%
+    rep_sample_n(size = 25, reps = n) %>%
+    summarise(red_sum = sum(color == "Red")) %>%
+    mutate(perc_red = red_sum/25)
+}
+
+virtual_class <- class_simulation(51)
+
+virtual_class %>% 
+  ggplot(aes(perc_red)) +
+    geom_histogram(bins = 30) +
+    labs(title = "Percentage of Red Beads Drawn",
+        subtitle = "Should we be suspicious of those outliers?",
+        caption = "Classroom data from 2020-03-03",
+        x = "Percentage of Red Beads Out of 25 Drawn",
+        y = "Count") + 
+  theme_fivethirtyeight()
+
+virtual_class %>%
+  arrange(desc(red_sum))
 ```
 
