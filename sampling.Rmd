@@ -57,13 +57,30 @@ virtual_class %>%
   ggplot(aes(perc_red)) +
     geom_histogram(bins = 30) +
     labs(title = "Percentage of Red Beads Drawn",
-        subtitle = "Should we be suspicious of those outliers?",
-        caption = "Classroom data from 2020-03-03",
+        subtitle = "Should we be suspicious of outliers?",
+        caption = "Virtual Simulation",
         x = "Percentage of Red Beads Out of 25 Drawn",
         y = "Count") + 
   theme_fivethirtyeight()
 
 virtual_class %>%
   arrange(desc(red_sum))
+```
+
+```{r}
+many_times <- tibble(trials = map(rep(51, 1000), class_simulation))
+
+
+unnest_many_times <- unnest(many_times, cols = c(trials))
+
+unnest_many_times %>%
+   ggplot(aes(perc_red)) +
+    geom_histogram(bins = 30) +
+    labs(title = "Percentage of Red Beads Drawn",
+        subtitle = "Simulation of 1000 classes",
+        caption = "Jad and Cass kick ass",
+        x = "Percentage of Red Beads Out of 25 Drawn",
+        y = "Count") + 
+  theme_fivethirtyeight()
 ```
 
